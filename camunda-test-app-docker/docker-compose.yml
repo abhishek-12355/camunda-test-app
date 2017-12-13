@@ -1,0 +1,18 @@
+version: "3.0"
+services:
+  camunda-test-app:
+    image: netshell/camunda-test-app-docker:1.0-SNAPSHOT
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    hostname:
+      api.camunda-test-app.netshell.com
+    container_name:
+      netshell_web_camunda
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "10m"
+#        max-file: "5"

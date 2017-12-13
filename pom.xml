@@ -10,6 +10,7 @@
     <modules>
         <module>camunda-test-war2</module>
         <module>camunda-test-war1</module>
+        <module>camunda-test-app-docker</module>
     </modules>
     <packaging>pom</packaging>
 

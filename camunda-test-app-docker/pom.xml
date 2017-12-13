@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>camunda-test-app</artifactId>
+        <groupId>com.netshell.test.camunda</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>camunda-test-app-docker</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.netshell.test.camunda</groupId>
+            <artifactId>camunda-test-war1</artifactId>
+            <type>war</type>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netshell.test.camunda</groupId>
+            <artifactId>camunda-test-war2</artifactId>
+            <type>war</type>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>dbstore-docker</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.netshell.test.camunda</groupId>
+                                    <artifactId>camunda-test-war1</artifactId>
+                                    <version>1.0-SNAPSHOT</version>
+                                    <type>war</type>
+                                    <!-- <classifier> [classifier - optional] </classifier>
+                                     <overWrite>[ true or false ]</overWrite>-->
+                                    <outputDirectory>${project.build.directory}/</outputDirectory>
+                                    <destFileName>camunda-test-war1-1.0-SNAPSHOT.war</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.netshell.test.camunda</groupId>
+                                    <artifactId>camunda-test-war2</artifactId>
+                                    <version>1.0-SNAPSHOT</version>
+                                    <type>war</type>
+                                    <!-- <classifier> [classifier - optional] </classifier>
+                                     <overWrite>[ true or false ]</overWrite>-->
+                                    <outputDirectory>${project.build.directory}/</outputDirectory>
+                                    <destFileName>camunda-test-war2-1.0-SNAPSHOT.war</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                            <!-- other configurations here -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.3.6</version>
+                <configuration>
+                    <repository>netshell/${project.name}</repository>
+                    <tag>${project.version}</tag>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
